@@ -1,0 +1,96 @@
+#page-auth {
+  display: flex;
+  align-items: stretch;
+
+  height: 100vh;
+
+  main {
+    flex: 8;
+
+    padding: 0 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    width: 100%;
+    max-width: 320px;
+
+    text-align: center;
+
+    > img {
+      align-self: center;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-family: 'Poppins', sans-serif;
+
+      margin: 64px 0 24px;
+    }
+
+    > form {
+      input {
+        height: 50px;
+        padding: 0 16px;
+
+        border-radius: 8px;
+        border: 1px solid var(--gray);
+
+        background: var(--white);
+      }
+
+      button {
+        margin-top: 16px;
+      }
+
+      input,
+      button {
+        width: 100%;
+      }
+    }
+
+    p {
+      font-size: 14px;
+      color: #737380;
+
+      margin-top: 16px;
+
+      a {
+        color: #e559f9;
+      }
+    }
+
+    .separator {
+      margin: 32px 0;
+      color: var(--gray);
+
+      font-size: 14px;
+
+      display: flex;
+      align-items: center;
+
+      &::before {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--gray);
+        margin-right: 16px;
+      }
+
+      &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--gray);
+        margin-left: 16px;
+      }
+    }
+  }
+}
