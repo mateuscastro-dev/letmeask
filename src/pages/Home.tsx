@@ -8,7 +8,7 @@ import { GoogleButton } from '../components/GoogleButton'
 
 import '../styles/auth.scss'
 
-export function Auth() {
+export function Home() {
   const history = useHistory()
 
   function navigateToNewRoom() {
