@@ -1,5 +1,3 @@
-import { useHistory } from 'react-router-dom'
-
 import logoImage from '../assets/images/logo.svg'
 
 import { AuthBanner } from '../components/AuthBanner'
@@ -9,12 +7,6 @@ import { GoogleButton } from '../components/GoogleButton'
 import '../styles/auth.scss'
 
 export function Home() {
-  const history = useHistory()
-
-  function navigateToNewRoom() {
-    history.push('/rooms/new')
-  }
-
   return (
     <div id='page-auth'>
       <AuthBanner />
@@ -30,9 +22,7 @@ export function Home() {
           <form>
             <input type='text' placeholder='Digite o código da sala' />
 
-            <Button type='submit' onClick={navigateToNewRoom}>
-              Entrar na sala
-            </Button>
+            <Button type='submit'>Entrar na sala</Button>
           </form>
         </div>
       </main>
