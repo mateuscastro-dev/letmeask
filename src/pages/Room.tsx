@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import logoImage from '../assets/images/logo.svg'
@@ -11,15 +11,62 @@ import { database } from '../services/firebase'
 
 import '../styles/room.scss'
 
+type Question = {
+  id: string
+  content: string
+  author: {
+    name: string
+    avatar: string
+  }
+  isHighlighted: boolean
+  isAnswered: boolean
+}
+
+type FirebaseQuestion = {
+  content: string
+  author: {
+    name: string
+    avatar: string
+  }
+  isHighlighted: boolean
+  isAnswered: boolean
+}
+
+type FirebaseQuestions = Record<string, FirebaseQuestion>
+
 type RoomParams = {
   roomKey: string
 }
 
 export function Room() {
+  const [roomName, setRoomName] = useState('')
+  const [questions, setQuestions] = useState<Question[]>([])
   const [newQuestion, setNewQuestion] = useState('')
 
   const { user } = useAuth()
   const { roomKey } = useParams<RoomParams>()
+
+  useEffect(() => {
+    const roomRef = database.ref(`rooms/${roomKey}`)
+
+    roomRef.on('value', room => {
+      const databaseRoom = room.val()
+      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {}
+
+      const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+        return {
+          id: key,
+          content: value.content,
+          author: value.author,
+          isHighlighted: value.isHighlighted,
+          isAnswered: value.isAnswered,
+        }
+      })
+
+      setRoomName(databaseRoom.name)
+      setQuestions(parsedQuestions)
+    })
+  }, [roomKey])
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault()
@@ -58,8 +105,8 @@ export function Room() {
 
       <main>
         <div className='room-title'>
-          <h1>Aula de React JS</h1>
-          <span>10 perguntas</span>
+          <h1>{`Sala: ${roomName}`}</h1>
+          {questions.length > 0 && <span>{`${questions.length} perguntas`}</span>}
         </div>
 
         <form onSubmit={handleSendQuestion}>
