@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import logoImage from '../assets/images/logo.svg'
 
@@ -15,6 +15,7 @@ export function NewRoom() {
   const [newRoomName, setNewRoomName] = useState('')
 
   const { user } = useAuth()
+  const history = useHistory()
 
   async function handleCreateRoom(event: FormEvent) {
     event.preventDefault()
@@ -25,10 +26,12 @@ export function NewRoom() {
 
     const roomRef = database.ref('rooms')
 
-    await roomRef.push({
+    const firebaseRoom = await roomRef.push({
       name: newRoomName,
       authorId: user?.id,
     })
+
+    history.push(`/rooms/${firebaseRoom.key}`)
   }
 
   return (
