@@ -1,72 +1,30 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import logoImage from '../assets/images/logo.svg'
 
 import { Button } from '../components/Button'
+import { Question } from '../components/Question'
 import { RoomCode } from '../components/RoomCode'
 
 import { useAuth } from '../hooks/useAuth'
+import { useRoom } from '../hooks/useRoom'
+
 import { database } from '../services/firebase'
 
 import '../styles/room.scss'
-
-type Question = {
-  id: string
-  content: string
-  author: {
-    name: string
-    avatar: string
-  }
-  isHighlighted: boolean
-  isAnswered: boolean
-}
-
-type FirebaseQuestion = {
-  content: string
-  author: {
-    name: string
-    avatar: string
-  }
-  isHighlighted: boolean
-  isAnswered: boolean
-}
-
-type FirebaseQuestions = Record<string, FirebaseQuestion>
 
 type RoomParams = {
   roomKey: string
 }
 
 export function Room() {
-  const [roomName, setRoomName] = useState('')
-  const [questions, setQuestions] = useState<Question[]>([])
   const [newQuestion, setNewQuestion] = useState('')
 
-  const { user } = useAuth()
   const { roomKey } = useParams<RoomParams>()
 
-  useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomKey}`)
-
-    roomRef.on('value', room => {
-      const databaseRoom = room.val()
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {}
-
-      const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
-        return {
-          id: key,
-          content: value.content,
-          author: value.author,
-          isHighlighted: value.isHighlighted,
-          isAnswered: value.isAnswered,
-        }
-      })
-
-      setRoomName(databaseRoom.name)
-      setQuestions(parsedQuestions)
-    })
-  }, [roomKey])
+  const { user } = useAuth()
+  const { roomName, questions } = useRoom(roomKey)
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault()
@@ -133,6 +91,12 @@ export function Room() {
             </Button>
           </div>
         </form>
+
+        <div className='questions-list'>
+          {questions.map((question, index) => (
+            <Question key={index} author={question.author} content={question.content} />
+          ))}
+        </div>
       </main>
     </div>
   )
