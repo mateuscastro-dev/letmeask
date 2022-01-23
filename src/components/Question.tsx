@@ -1,3 +1,5 @@
+import classnames from 'classnames'
+
 import '../styles/question.scss'
 
 type QuestionProps = {
@@ -7,11 +9,25 @@ type QuestionProps = {
     name: string
     avatar: string
   }
+  isAnswered?: boolean
+  isHighlighted?: boolean
 }
 
-export function Question({ children, content, author }: QuestionProps) {
+export function Question({
+  children,
+  content,
+  author,
+  isAnswered = false,
+  isHighlighted = false,
+}: QuestionProps) {
   return (
-    <div className='question'>
+    <div
+      className={classnames(
+        'question',
+        { answered: isAnswered },
+        { highlighted: isHighlighted && !isAnswered },
+      )}
+    >
       <p>{content}</p>
 
       <footer>
@@ -20,7 +36,7 @@ export function Question({ children, content, author }: QuestionProps) {
           <span>{author.name}</span>
         </div>
 
-        <div>{children}</div>
+        <div className='buttons-group'>{children}</div>
       </footer>
     </div>
   )
