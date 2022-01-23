@@ -1,4 +1,8 @@
 <p align="center">
+  <img alt="Letmeask" src=".github/logo.svg" width="160px">
+</p>
+
+<p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -24,7 +28,8 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [Sass](https://sass-lang.com)
 - [React](https://reactjs.org)
-- [TypeScript](https://www.typescriptlang.org/)
+- [Firebase](https://firebase.google.com)
+- [TypeScript](https://www.typescriptlang.org)
 
 ## 💻 Projeto
 
