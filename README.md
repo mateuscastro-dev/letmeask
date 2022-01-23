@@ -33,7 +33,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Projeto
 
-O letmeask é uma plataforma que permite a criação de salas com o objetivo de administrar perguntas.
+O letmeask é uma plataforma que permite a criação de salas de Q&amp;A para criadores de conteúdo interagirem com seu público.
 
 ## 🔖 Layout
 
